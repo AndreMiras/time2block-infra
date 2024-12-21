@@ -22,3 +22,15 @@ resource "google_storage_bucket" "default" {
     enabled = true
   }
 }
+
+resource "google_project_service" "resource_manager_api" {
+  project            = "time2block"
+  service            = "cloudresourcemanager.googleapis.com"
+  disable_on_destroy = false
+}
+
+resource "google_project_service" "cloud_run_api" {
+  project            = var.project
+  service            = "run.googleapis.com"
+  disable_on_destroy = false
+}

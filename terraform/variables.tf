@@ -32,3 +32,24 @@ variable "service_name" {
   type        = string
   default     = "t2b"
 }
+
+## Misc
+
+variable "image_tag" {
+  type    = string
+  default = "latest"
+}
+
+variable "image" {
+  type    = string
+  default = "time2block"
+}
+
+variable "repository_id" {
+  type    = string
+  default = "andremiras"
+}
+
+locals {
+  image_name = "${var.repository_id}/${var.image}:${var.image_tag}"
+}
