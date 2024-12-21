@@ -11,6 +11,7 @@ concurrency: terraform
 env:
   PRODUCTION_REF: refs/heads/main
   CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE: terraform/terraform-service-key.json
+  CLOUDSDK_CORE_ACCOUNT: terraform-service-account@time2block.iam.gserviceaccount.com
 
 jobs:
   terraform:
@@ -26,5 +27,9 @@ jobs:
       # Checks that all Terraform configuration files adhere to a canonical format
       - run: make lint/terraform
       - run: make devops/terraform/plan
-      - run: make devops/terraform/apply
+      - name: make devops/terraform/apply
         if: github.ref == env.PRODUCTION_REF && contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name)
+        run: |
+          make devops/terraform/apply
+          # redeploy in case only the image has changed
+          make devops/gcloud/redeploy/api
