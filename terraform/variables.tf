@@ -33,6 +33,14 @@ variable "service_name" {
   default     = "t2b"
 }
 
+## Service environment variables
+
+variable "env_enable_logger" {
+  description = "If the request logging should be enabled."
+  type        = bool
+  default     = true
+}
+
 ## Misc
 
 variable "image_tag" {
