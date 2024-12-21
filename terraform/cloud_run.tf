@@ -22,6 +22,19 @@ resource "google_cloud_run_v2_service" "api" {
       ports {
         container_port = 8000
       }
+      env {
+        name  = "ENABLE_LOGGER"
+        value = var.env_enable_logger
+      }
+      env {
+        name = "CHAINS"
+        value_source {
+          secret_key_ref {
+            secret  = data.google_secret_manager_secret.chains.secret_id
+            version = "latest"
+          }
+        }
+      }
     }
     service_account = var.client_email
   }
