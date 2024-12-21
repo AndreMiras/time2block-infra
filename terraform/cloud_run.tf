@@ -53,3 +53,18 @@ resource "google_cloud_run_v2_service_iam_policy" "api_noauth" {
   name        = google_cloud_run_v2_service.api.name
   policy_data = data.google_iam_policy.noauth.policy_data
 }
+
+resource "google_cloud_run_domain_mapping" "api" {
+  location = var.region
+  name     = local.api_domain_name
+  metadata {
+    namespace = var.project
+    labels = {
+      prefix       = var.service_name
+      service_name = var.service_name
+    }
+  }
+  spec {
+    route_name = google_cloud_run_v2_service.api.name
+  }
+}

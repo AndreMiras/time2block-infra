@@ -33,6 +33,25 @@ variable "service_name" {
   default     = "t2b"
 }
 
+## Domains setup
+
+variable "domain_suffix" {
+  type        = string
+  description = "The domain suffix used by all subdomains"
+  default     = "t2b.is"
+}
+
+variable "cloudflare_zone_id" {
+  type        = string
+  description = "The zone identifier"
+  default     = "5dec4341390f2d15a370b74bb2ef7caa"
+}
+
+variable "api_domain_prefix" {
+  type    = string
+  default = "www"
+}
+
 ## Service environment variables
 
 variable "env_enable_logger" {
@@ -59,5 +78,7 @@ variable "repository_id" {
 }
 
 locals {
-  image_name = "${var.repository_id}/${var.image}:${var.image_tag}"
+  image_name      = "${var.repository_id}/${var.image}:${var.image_tag}"
+  www_domain_name = "www.${var.domain_suffix}"
+  api_domain_name = "${var.api_domain_prefix}.${var.domain_suffix}"
 }
