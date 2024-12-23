@@ -30,7 +30,7 @@ devops/terraform/output:
 	terraform -chdir=terraform output
 
 devops/gcloud/redeploy/api: ensure-account-set
-	gcloud run deploy $(API_SERVICE_NAME) \
+	gcloud run services update $(API_SERVICE_NAME) \
 	--project $(PROJECT) \
 	--image $(DOCKER_IMAGE_NAME) \
 	--platform managed \
